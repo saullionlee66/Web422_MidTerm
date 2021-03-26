@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+
+import {useState} from 'react'
+import AppID from 'ibmcloud-appid-js';
+
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import Child from './Child'
+import LoginButton from './Components/LoginButton'
+import Interface from './Components/Interface'
+import Greeting from './Components/Greeting'
 
 function App() {
+  const [message,setMessage] = useState("");
+  const [input,setInput] = useState("");//string 
+  const [result, setResult] = useState(0);
+  const [operator,setOperator] = useState("");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <LoginButton />
+      <Switch>
+        <Route exact path='/' component={Greeting} />
+        <Route path='/app' render={()=><Interface input={input} setInput={setInput}
+      result={result} setResult={setResult} 
+      operator={operator} setOperator={setOperator} />} />
+      </Switch>
+      
+      {/* <h1>{message}</h1>
+      <Child setMessage={setMessage} /> */}
+    </Router>
   );
 }
 
